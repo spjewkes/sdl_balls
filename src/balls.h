@@ -345,13 +345,13 @@ public:
 			}
 
 			// Clear Screen
-			SDL_SetRenderDrawColor(get_renderer(), 0, 0, 0, 255);
-			SDL_RenderClear(get_renderer());
+			SDL_SetRenderDrawColor(GetRenderer(), 0, 0, 0, 255);
+			SDL_RenderClear(GetRenderer());
 
 			// Draw Lines
 			for (auto line : vecLines)
 			{
-				SDL_SetRenderDrawColor(get_renderer(), 255, 255, 255, 255);
+				SDL_SetRenderDrawColor(GetRenderer(), 255, 255, 255, 255);
 
 				FillCircle(line.sx, line.sy, line.radius);
 				FillCircle(line.ex, line.ey, line.radius);
@@ -362,21 +362,21 @@ public:
 				nx /= d;
 				ny /= d;
 
-				SDL_RenderDrawLine(get_renderer(), (line.sx + nx * line.radius), (line.sy + ny * line.radius), (line.ex + nx * line.radius), (line.ey + ny * line.radius));
-				SDL_RenderDrawLine(get_renderer(), (line.sx - nx * line.radius), (line.sy - ny * line.radius), (line.ex - nx * line.radius), (line.ey - ny * line.radius));
+				SDL_RenderDrawLine(GetRenderer(), (line.sx + nx * line.radius), (line.sy + ny * line.radius), (line.ex + nx * line.radius), (line.ey + ny * line.radius));
+				SDL_RenderDrawLine(GetRenderer(), (line.sx - nx * line.radius), (line.sy - ny * line.radius), (line.ex - nx * line.radius), (line.ey - ny * line.radius));
 			}
 
 			// Draw Balls
-			SDL_SetRenderDrawColor(get_renderer(), 255, 0, 0, 255);
+			SDL_SetRenderDrawColor(GetRenderer(), 255, 0, 0, 255);
 			for (auto ball : vecBalls)
 				FillCircle(ball.px, ball.py, ball.radius);
 
 			// Draw Cue
-			SDL_SetRenderDrawColor(get_renderer(), 255, 255, 255, 255);
+			SDL_SetRenderDrawColor(GetRenderer(), 255, 255, 255, 255);
 			if (pSelectedBall != nullptr)
-				SDL_RenderDrawLine(get_renderer(), pSelectedBall->px, pSelectedBall->py, GetMouseX(), GetMouseY());
+				SDL_RenderDrawLine(GetRenderer(), pSelectedBall->px, pSelectedBall->py, GetMouseX(), GetMouseY());
 
-			SDL_RenderPresent(get_renderer());
+			SDL_RenderPresent(GetRenderer());
 			
 			return true;
 		}

@@ -3,7 +3,7 @@
 int main()
 {
 	CirclePhysics balls(800, 600);
-	balls.start();
+	balls.Start();
 
     return 0;
 }

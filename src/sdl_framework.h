@@ -39,7 +39,7 @@ public:
 				throw SDLException("Failed to init SDL");
 			}
 
-			window = SDL_CreateWindow( get_name(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN );
+			window = SDL_CreateWindow( GetName(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN );
 			if (!window)
 			{
 				throw SDLException("Failed to create SDL window");
@@ -56,7 +56,7 @@ public:
 	virtual bool OnUpdate(float elapsed_time) = 0;
 	virtual void OnDestroy() = 0;
 
-	void start()
+	void Start()
 		{
 			if (!OnCreate())
 			{
@@ -155,7 +155,7 @@ public:
 				tp1 = tp2;
 
 				char title[256];
-				snprintf(title, 256, "%8.2f fps - %s", 1.0 / elapsed_time.count(), get_name());
+				snprintf(title, 256, "%8.2f fps - %s", 1.0 / elapsed_time.count(), GetName());
 				SDL_SetWindowTitle(window, title);
 				
 				if (!OnUpdate(elapsed_time.count()))
@@ -182,10 +182,10 @@ public:
 		}
 
 protected:
-	virtual const char* get_name() { return "SDLFramework"; }
+	virtual const char* GetName() { return "SDLFramework"; }
 	
-	SDL_Window* get_window() { return window; }
-	SDL_Renderer* get_renderer() { return renderer; }
+	SDL_Window* GetWindow() { return window; }
+	SDL_Renderer* GetRenderer() { return renderer; }
 	int ScreenWidth() const { return w; }
 	int ScreenHeight() const { return h; }
 
@@ -204,7 +204,7 @@ protected:
 		auto drawline = [&](int sx, int ex, int ny)
 		{
 			for (int i = sx; i < ex; i++)
-				SDL_RenderDrawPoint(get_renderer(), i, ny);
+				SDL_RenderDrawPoint(GetRenderer(), i, ny);
 		};
 
 		while (y >= x)
