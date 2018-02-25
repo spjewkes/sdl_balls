@@ -162,6 +162,8 @@ public:
 				{
 					throw SDLException("Failed on game update");
 				}
+
+				SDL_RenderPresent(GetRenderer());
 			}
 
 			OnDestroy();
@@ -193,6 +195,11 @@ protected:
 	int GetMouseY() const { return m_mousePosY; }
 	KeyState GetMouse(int buttonID) const { return m_mouse[buttonID]; }
 
+	void DrawLine(int x0, int y0, int x1, int y1)
+	{
+		SDL_RenderDrawLine(renderer, x0, y0, x1, y1);
+	}
+
 	void FillCircle(int xc, int yc, int r)
 	{
 		// Taken from wikipedia
@@ -217,6 +224,17 @@ protected:
 			if (p < 0) p += 4 * x++ + 6;
 			else p += 4 * (x++ - y--) + 10;
 		}
+	}
+
+	void SetDrawColor(int r, int g, int b, int a)
+	{
+		SDL_SetRenderDrawColor(renderer, r, g, b, a);
+	}
+	
+	void ClearScreen(int r, int g, int b, int a)
+	{
+		SDL_SetRenderDrawColor(renderer, r, g, b, a);
+		SDL_RenderClear(renderer);
 	}
 
 private:

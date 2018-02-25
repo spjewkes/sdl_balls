@@ -2,7 +2,6 @@
 #define __BALLS_H__
 
 #include <vector>
-#include <SDL2/SDL.h>
 #include "sdl_framework.h"
 
 using namespace std;
@@ -344,14 +343,12 @@ public:
 				}
 			}
 
-			// Clear Screen
-			SDL_SetRenderDrawColor(GetRenderer(), 0, 0, 0, 255);
-			SDL_RenderClear(GetRenderer());
+			ClearScreen(0, 0, 0, 255);
 
 			// Draw Lines
 			for (auto line : vecLines)
 			{
-				SDL_SetRenderDrawColor(GetRenderer(), 255, 255, 255, 255);
+				SetDrawColor(255, 255, 255, 255);
 
 				FillCircle(line.sx, line.sy, line.radius);
 				FillCircle(line.ex, line.ey, line.radius);
@@ -362,21 +359,19 @@ public:
 				nx /= d;
 				ny /= d;
 
-				SDL_RenderDrawLine(GetRenderer(), (line.sx + nx * line.radius), (line.sy + ny * line.radius), (line.ex + nx * line.radius), (line.ey + ny * line.radius));
-				SDL_RenderDrawLine(GetRenderer(), (line.sx - nx * line.radius), (line.sy - ny * line.radius), (line.ex - nx * line.radius), (line.ey - ny * line.radius));
+				DrawLine((line.sx + nx * line.radius), (line.sy + ny * line.radius), (line.ex + nx * line.radius), (line.ey + ny * line.radius));
+				DrawLine((line.sx - nx * line.radius), (line.sy - ny * line.radius), (line.ex - nx * line.radius), (line.ey - ny * line.radius));
 			}
 
 			// Draw Balls
-			SDL_SetRenderDrawColor(GetRenderer(), 255, 0, 0, 255);
+			SetDrawColor(255, 0, 0, 255);
 			for (auto ball : vecBalls)
 				FillCircle(ball.px, ball.py, ball.radius);
 
 			// Draw Cue
-			SDL_SetRenderDrawColor(GetRenderer(), 255, 255, 255, 255);
+			SetDrawColor(255, 255, 255, 255);
 			if (pSelectedBall != nullptr)
-				SDL_RenderDrawLine(GetRenderer(), pSelectedBall->px, pSelectedBall->py, GetMouseX(), GetMouseY());
-
-			SDL_RenderPresent(GetRenderer());
+				DrawLine(pSelectedBall->px, pSelectedBall->py, GetMouseX(), GetMouseY());
 			
 			return true;
 		}
