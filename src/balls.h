@@ -64,13 +64,13 @@ public:
 					return fabs((x1 - px)*(x1 - px) + (y1 - py)*(y1 - py)) < (r1 * r1);
 				};
 
-			if (m_mouse[0].bPressed)
+			if (GetMouse(0).bPressed)
 			{
 				// Check for selected ball
 				pSelectedBall = nullptr;
 				for (auto &ball : vecBalls)
 				{
-					if (IsPointInCircle(ball.px, ball.py, ball.radius, m_mousePosX, m_mousePosY))
+					if (IsPointInCircle(ball.px, ball.py, ball.radius, GetMouseX(), GetMouseY()))
 					{
 						pSelectedBall = &ball;
 						break;
@@ -81,14 +81,14 @@ public:
 				pSelectedLine = nullptr;
 				for (auto &line : vecLines)
 				{
-					if (IsPointInCircle(line.sx, line.sy, line.radius, m_mousePosX, m_mousePosY))
+					if (IsPointInCircle(line.sx, line.sy, line.radius, GetMouseX(), GetMouseY()))
 					{
 						pSelectedLine = &line;
 						bSelectedLineStart = true;
 						break;
 					}
 
-					if (IsPointInCircle(line.ex, line.ey, line.radius, m_mousePosX, m_mousePosY))
+					if (IsPointInCircle(line.ex, line.ey, line.radius, GetMouseX(), GetMouseY()))
 					{
 						pSelectedLine = &line;
 						bSelectedLineStart = false;
@@ -97,7 +97,7 @@ public:
 				}
 			}
 
-			if (m_mouse[0].bHeld)
+			if (GetMouse(0).bHeld)
 			{
 				if (pSelectedLine != nullptr)
 				{			
@@ -114,25 +114,25 @@ public:
 				}
 			}
 
-			if (m_mouse[0].bReleased)
+			if (GetMouse(0).bReleased)
 			{
 				if (pSelectedBall != nullptr)
 				{
 					// Apply velocity
-					pSelectedBall->vx = 5.0f * ((pSelectedBall->px) - m_mousePosX);
-					pSelectedBall->vy = 5.0f * ((pSelectedBall->py) - m_mousePosY);
+					pSelectedBall->vx = 5.0f * ((pSelectedBall->px) - GetMouseX());
+					pSelectedBall->vy = 5.0f * ((pSelectedBall->py) - GetMouseY());
 				}
 
 				pSelectedBall = nullptr;
 				pSelectedLine = nullptr;
 			}
 
-			if (m_mouse[1].bHeld)
+			if (GetMouse(1).bHeld)
 			{
 				for (auto &ball : vecBalls)
 				{
-					ball.vx += (m_mousePosX - ball.px) * 0.01f;
-					ball.vy += (m_mousePosY - ball.py) * 0.01f;
+					ball.vx += (GetMouseX() - ball.px) * 0.01f;
+					ball.vy += (GetMouseY() - ball.py) * 0.01f;
 				}
 			}
 
@@ -374,7 +374,7 @@ public:
 			// Draw Cue
 			SDL_SetRenderDrawColor(get_renderer(), 255, 255, 255, 255);
 			if (pSelectedBall != nullptr)
-				SDL_RenderDrawLine(get_renderer(), pSelectedBall->px, pSelectedBall->py, m_mousePosX, m_mousePosY);
+				SDL_RenderDrawLine(get_renderer(), pSelectedBall->px, pSelectedBall->py, GetMouseX(), GetMouseY());
 
 			SDL_RenderPresent(get_renderer());
 			

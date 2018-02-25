@@ -8,6 +8,13 @@
 
 using namespace std;
 
+struct KeyState
+{
+	bool bPressed;
+	bool bReleased;
+	bool bHeld;
+};
+
 class SDLException : public std::exception
 {
 public:
@@ -25,7 +32,7 @@ private:
 class SDLFramework
 {
 public:
-	SDLFramework(int width, int height) : m_mousePosX(0), m_mousePosY(0), w(width), h(height)
+	SDLFramework(int width, int height) : w(width), h(height), m_mousePosX(0), m_mousePosY(0)
 		{
 			if (SDL_Init(SDL_INIT_VIDEO) < 0)
 			{
@@ -181,8 +188,11 @@ protected:
 	SDL_Renderer* get_renderer() { return renderer; }
 	int ScreenWidth() const { return w; }
 	int ScreenHeight() const { return h; }
+
 	int GetMouseX() const { return m_mousePosX; }
 	int GetMouseY() const { return m_mousePosY; }
+	KeyState GetMouse(int buttonID) const { return m_mouse[buttonID]; }
+
 	void FillCircle(int xc, int yc, int r)
 	{
 		// Taken from wikipedia
@@ -209,22 +219,17 @@ protected:
 		}
 	}
 
-	struct sKeyState
-	{
-		bool bPressed;
-		bool bReleased;
-		bool bHeld;
-	} m_mouse[2];
-
-	int m_mousePosX;
-	int m_mousePosY;
-
 private:
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
 
 	int w = 0;
 	int h = 0;
+
+	KeyState m_mouse[2];
+
+	int m_mousePosX;
+	int m_mousePosY;
 };
 
 #endif
